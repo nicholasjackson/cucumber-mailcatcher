@@ -1,10 +1,10 @@
 # cucumber-mailcatcher
 This gem provides default steps for cucumber to interact with the mailcatcher test SMTP server [http://mailcatcher.me/](http://mailcatcher.me/)
 
-You can write steps such as:
+You can write steps such as:  
 `Then I should receive an email from "jackson.nic@gmail.com"`
 
-or
+or  
 
 ```
 Then I should receive an email with the following details
@@ -12,7 +12,7 @@ Then I should receive an email with the following details
   | jackson.nic@gmail.com | test@test.com | My test email | 
 ```
 
-or 
+or   
 
 `Then I should receive an email with a body containing "Some body content"`
 
