@@ -1,4 +1,7 @@
 # cucumber-mailcatcher
+[![Build Status](https://travis-ci.org/nicholasjackson/cucumber-mailcatcher.svg?branch=master)](https://travis-ci.org/nicholasjackson/cucumber-mailcatcher)
+[![Coverage Status](https://coveralls.io/repos/nicholasjackson/cucumber-mailcatcher/badge.svg?branch=master)](https://coveralls.io/r/nicholasjackson/cucumber-mailcatcher?branch=master)
+
 This gem provides default steps for cucumber to interact with the mailcatcher test SMTP server [http://mailcatcher.me/](http://mailcatcher.me/)
 
 ## Steps:  
