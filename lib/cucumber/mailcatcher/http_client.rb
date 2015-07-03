@@ -10,14 +10,27 @@ module Cucumber
       attr_accessor :server_url
 
       def get_messages
-        make_request '/messages'
+        do_get '/messages'
       end
 
-      def make_request relative_url
+      def delete_messages
+        do_delete '/messages'
+
+        true
+      end
+
+      def do_get relative_url
         uri = URI("#{@server_url}#{relative_url}")
         Net::HTTP.get(uri)
       end
+
+      def do_delete relative_url
+        uri = URI("#{@server_url}#{relative_url}")
+        p uri
+        request = Net::HTTP.new(uri.host,uri.port)
+        request.delete(uri.path).code
+      end
     end
-    
+
   end
 end
