@@ -17,6 +17,9 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
+require 'webmock/rspec'
+WebMock.disable_net_connect!(allow_localhost: false)
+
 require 'coveralls'
 Coveralls.wear!
 
