@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "sender": "<admin@demo.gs>",
+    "sender": "<test1@demo.gs>",
     "recipients": [
       "<nic@thatlondon.com>"
     ],
@@ -11,9 +11,20 @@
   },
   {
     "id": 2,
-    "sender": "<admin@demo.gs>",
+    "sender": "<test2@demo.gs>",
     "recipients": [
-      "<nic@thatlondon.com>"
+      "<nic@thatlondon.com>",
+      "<jackson.nic@gmail.com>"
+    ],
+    "subject": "Your password reset reminder",
+    "size": "314",
+    "created_at": "2015-06-30T20:39:43.000+00:00"
+  },
+  {
+    "id": 3,
+    "sender": "<test3@demo.gs>",
+    "recipients": [
+      "<jackson.nic@gmail.com>"
     ],
     "subject": "Your password reset reminder",
     "size": "314",
