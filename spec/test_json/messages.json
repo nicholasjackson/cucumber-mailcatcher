@@ -26,7 +26,7 @@
     "recipients": [
       "<jackson.nic@gmail.com>"
     ],
-    "subject": "Your password reset reminder",
+    "subject": "Something",
     "size": "314",
     "created_at": "2015-06-30T20:39:43.000+00:00"
   }

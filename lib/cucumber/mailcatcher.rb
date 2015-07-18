@@ -13,3 +13,11 @@ end
 Given(/^I should receive an email sent to "([^"]*)"/) do |email|
 
 end
+
+Given(/^Then I should receive an email with subject "([^"]*)"/) do |subject|
+
+end
+
+Given(/^should receive an email with a body containing "([^"]*)"/) do |body|
+  
+end
