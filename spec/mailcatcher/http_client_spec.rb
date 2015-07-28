@@ -1,13 +1,36 @@
 require_relative '../../lib/cucumber/mailcatcher/http_client'
 
 describe Cucumber::Mailcatcher::HttpClient do
+  it "should raise an exception when url is nil" do
+    Cucumber::Mailcatcher::HttpClient.server_url = nil
 
-  let(:server) {"http://localhost"}
+    expect { Cucumber::Mailcatcher::HttpClient.new }.
+      to raise_error("Please set the Mailcatcher server url e.g. Cucumber::Mailcatcher::Api.server_url = 'http://localhost:1080'")
+  end
+
+  it "should raise an exception when url is not a valid url" do
+    Cucumber::Mailcatcher::HttpClient.server_url = 'httpss'
+
+    expect { Cucumber::Mailcatcher::HttpClient.new }.
+      to raise_error("Please set the Mailcatcher server url e.g. Cucumber::Mailcatcher::Api.server_url = 'http://localhost:1080'")
+  end
+
+  it "should not raise an exception when url is valid url" do
+    Cucumber::Mailcatcher::HttpClient.server_url = 'https://localhost:2131/'
+
+    expect { Cucumber::Mailcatcher::HttpClient.new }.
+      to_not raise_error
+  end
+end
+
+describe Cucumber::Mailcatcher::HttpClient do
+  subject(:http) {
+    Cucumber::Mailcatcher::HttpClient.server_url = 'http://localhost'
+    Cucumber::Mailcatcher::HttpClient.new
+  }
 
   before(:each) do
-    subject.server_url = server
-
-    stub_request(:get, "#{server}/messages").to_return(
+    stub_request(:get, "http://localhost/messages").to_return(
       :status => 200,
       :body => File.open('./spec/test_json/messages.json'),
       :headers => {}
@@ -16,77 +39,28 @@ describe Cucumber::Mailcatcher::HttpClient do
     stub_request(:delete, "http://localhost/messages").to_return(
       :status => 204
     )
-
-    stub_request(:get, "http://localhost/messages/1.json.html").to_return(
-      :status => 200,
-      :body => File.open('./spec/test_json/message.html'),
-      :headers => {}
-    )
-
-    stub_request(:get, "http://localhost/messages/2.json.html").to_return(
-      :status => 404,
-      :headers => {}
-    )
-
-    stub_request(:get, "http://localhost/messages/3.json.html").to_return(
-      :status => 404,
-      :headers => {}
-    )
-
-    stub_request(:get, "http://localhost/messages/1.json.plain").to_return(
-      :status => 200,
-      :body => File.open('./spec/test_json/message.txt'),
-      :headers => {}
-    )
-
-    stub_request(:get, "http://localhost/messages/2.json.plain").to_return(
-      :status => 404,
-      :headers => {}
-    )
-
-    stub_request(:get, "http://localhost/messages/3.json.plain").to_return(
-      :status => 404,
-      :headers => {}
-    )
   end
 
-  it "should return two messages when get_messages is called" do
-    messages = subject.get_messages
+  it 'should request url when do_get called' do
+    http.do_get '/messages'
+    expect(WebMock).to have_requested(:get,"http://localhost/messages").once
+  end
 
-    expect(WebMock).to have_requested(:get,"#{server}/messages").once
+  it 'should request url when do_get called and return response' do
+    response = http.do_get '/messages'
+
+    expect(response.code).to eq '200'
+  end
+
+  it 'should return json when do_get_json is called' do
+    messages = http.do_get_json '/messages'
+
     expect(messages.length).to be 3
   end
 
-  it "should delete two messages" do
-    deleted = subject.delete_messages
+  it 'should call url when do_delete is called' do
+    messages = http.do_delete '/messages'
 
-    expect(WebMock).to have_requested(:delete,"#{server}/messages").once
-    expect(deleted).to be true
+    expect(WebMock).to have_requested(:delete,"http://localhost/messages").once
   end
-
-  it 'should return one message with from email test1@demo.gs' do
-    messages = subject.get_messages_from_email 'test1@demo.gs'
-    expect(messages.length).to be 1
-  end
-
-  it 'should return two messages to email nic@thatlondon.com' do
-    messages = subject.get_messages_to_email 'nic@thatlondon.com'
-    expect(messages.length).to be 2
-  end
-
-  it 'should return two messages with subject Your password reset reminder' do
-    messages = subject.get_messages_with_subject 'Your password reset reminder'
-    expect(messages.length).to be 2
-  end
-
-  it 'should return one message with html body containing link' do
-    messages = subject.get_messages_with_html_body '<a href='
-    expect(messages.length).to be 1
-  end
-
-  it 'should return one message with plain body containing link' do
-    messages = subject.get_messages_with_plain_body 'http://mysite.com'
-    expect(messages.length).to be 1
-  end
-
 end
