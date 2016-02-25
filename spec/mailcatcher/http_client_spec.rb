@@ -5,14 +5,14 @@ describe Cucumber::Mailcatcher::HttpClient do
     Cucumber::Mailcatcher::HttpClient.server_url = nil
 
     expect { Cucumber::Mailcatcher::HttpClient.new }.
-      to raise_error("Please set the Mailcatcher server url e.g. Cucumber::Mailcatcher::Api.server_url = 'http://localhost:1080'")
+      to raise_error("Please set the Mailcatcher server url e.g. Cucumber::Mailcatcher::HttpClient.server_url = 'http://localhost:1080'")
   end
 
   it "should raise an exception when url is not a valid url" do
     Cucumber::Mailcatcher::HttpClient.server_url = 'httpss'
 
     expect { Cucumber::Mailcatcher::HttpClient.new }.
-      to raise_error("Please set the Mailcatcher server url e.g. Cucumber::Mailcatcher::Api.server_url = 'http://localhost:1080'")
+      to raise_error("Please set the Mailcatcher server url e.g. Cucumber::Mailcatcher::HttpClient.server_url = 'http://localhost:1080'")
   end
 
   it "should not raise an exception when url is valid url" do
