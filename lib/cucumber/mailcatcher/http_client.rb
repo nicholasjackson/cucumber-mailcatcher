@@ -18,7 +18,7 @@ module Cucumber
       end
 
       def initialize
-        error = "Please set the Mailcatcher server url e.g. Cucumber::Mailcatcher::Api.server_url = 'http://localhost:1080'"
+        error = "Please set the Mailcatcher server url e.g. Cucumber::Mailcatcher::HttpClient.server_url = 'http://localhost:1080'"
 
         valid = @@server_url =~ /\A#{URI.regexp(%w(http https))}\z/
 
